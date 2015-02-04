@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "forever": "latest",
-    "mocha": "latest"
+    "mocha": "latest",
+    "bower": "latest"
   },
   "window": {
     "title": "抽獎程式",

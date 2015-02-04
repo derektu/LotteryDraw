@@ -19,9 +19,9 @@ var EmployeeLoader = require('../lib/employeeloader');
 describe("Test ITTI", function() {
 
     it.skip("test", function(done) {
-        var text = '研發部 陳晏輝';
+        var text = '研發部 程式師';
         var filename = './tts/' + text + '.wav';
-        TTSDownloder.createClient({user:'derektu', password:'beagle'})
+        TTSDownloder.createClient({user:'test', password:'test'})
             .then(function(client) {
                 return client.download(text, null, filename);
             })
@@ -54,9 +54,9 @@ describe("Test ITTI", function() {
 
     it.skip("test", function(done) {
         var url_wsdl = 'http://tts.itri.org.tw/TTSService/Soap_1_3.php?wsdl';
-        var account = 'derektu';
-        var password = 'beagle';
-        var phrase = '研發部 陳晏輝';
+        var account = 'test';
+        var password = 'test';
+        var phrase = '研發部 程式師';
         var ttsSpeaker = 'Theresa';// 'Angela';
         var createClientAsync = Promise.promisify(soap.createClient);
         var _client = null;

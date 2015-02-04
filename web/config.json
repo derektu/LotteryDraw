@@ -1,4 +1,4 @@
 {
   "enableTTS" : false,
-  "spinDelay" : 100
+  "spinDelay" : 1000
 }
