@@ -1,0 +1,14 @@
+.DS_Store
+
+node_modules/
+typings/
+bower_components/
+
+data/*.json
+web/tts/*
+
+
+# WebStorm file
+#
+workspace.xml
+

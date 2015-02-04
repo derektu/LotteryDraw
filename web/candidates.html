@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="AppCandidates">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <base href="/">
+
+    <!-- title -->
+    <title>歲末抽抽樂 - 尚未抽出名額</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <!-- ngAnimate -->
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <!-- for angular.bootstrap.ui -->
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/buzz/dist/buzz.min.js"></script>
+    <script src="js/candidates.js"></script>
+
+</head>
+<body ng-controller="CandidatesCtrl">
+    <div class="mg-canvas">
+        <div class="page-header mg-header">
+            <div class="mg-header-title" ng-cloak>歲末抽抽樂 - 未抽出名額</div>
+            <div class="btn-group-lg" style="position:absolute; top: 20px; right: 20px">
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle btn-primary" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><a class="btn-lg" ng-click="refresh()">Refresh</a></li>
+                        <li><a class="btn-lg" ng-click="print()">Print</a></li>
+                        <li class="divider"></li>
+                        <li><a class="btn-lg" ng-href="index.html" target="_self">回到抽獎頁面</a></li>
+                        <!--
+                        <li class="divider"></li>
+                        底下可以放測試功能
+                        -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- candidatesData -->
+        <script type="text/ng-template" id="candidates-board.html">
+            <div>
+                <div class="result-row-title">獎項分類:{{viewData.groupId}} (尚未抽出人數:{{viewData.count}}人)</div>
+                <div ng-repeat="batch in viewData.batches" class="row">
+                    <div ng-repeat="employee in batch" class="col-md-2 well well-lg" style="margin:4px">
+                        <span class="mg-tile-emp-depart">{{employee.depart}}</span>
+                        <span class="mg-tile-emp-name">{{employee.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <div class="result-canvas">
+            <candidates-board group-id="groupId"></candidates-board>
+        </div>
+    </div>
+</body>
+</html>

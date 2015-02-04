@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app="App">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- title -->
+    <title>抽獎程式</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <!-- ngAnimate -->
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <!-- for angular.bootstrap.ui -->
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/buzz/dist/buzz.min.js"></script>
+    <script src="js/sysjust-confirm.js"></script>
+    <script src="js/main.js"></script>
+
+</head>
+<body ng-controller="GameCtrl">
+    <div id="wheel-container" class="wheel-container" ng-cloak ng-show="isSpinning()">
+        <img id="wheel-image" class="wheel-image" src="img/wheel.png" width="600" height="600"/>
+    </div>
+
+    <div class="mg-canvas">
+        <div class="page-header mg-header">
+            <div class="mg-header-title">歲末抽抽樂</div>
+            <div class="btn-group-lg" style="position:absolute; top: 20px; right: 20px">
+                <button class="btn-lg btn-info" style="margin-right:20px; width:140px" ng-disabled="!canDraw()" ng-click="draw()">SPIN</button>
+                <button class="btn-lg btn-success" ng-click="nextPrize(-1)" ng-disabled="!canNextPrize(-1)"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;上一獎</button>
+                <button class="btn-lg btn-success" ng-click="nextPrize(1)" ng-disabled="!canNextPrize(1)">下一獎&nbsp;<span class="glyphicon glyphicon-arrow-right"></span></button>
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle btn-primary" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><a class="btn-lg" ng-click="refresh()">Refresh</a></li>
+                        <li><a class="btn-lg" ng-click="print()">Print</a></li>
+                        <li class="divider"></li>
+                        <li><a class="btn-lg" ng-click="toggleTTS()">{{getTTSCmdString()}}</a></li>
+                        <li><a class="btn-lg" ng-href="result.html" target="_self">顯示全部得獎名單</a></li>
+                        <li><a class="btn-lg" ng-href="{{'candidates.html?groupId=' + getPrizeGroupId()}}" target="_self">顯示尚未抽出名單</a></li>
+                        <li class="divider"></li>
+                        <li><a class="btn-lg" ng-click="reloadGame()">重新載入資料</a></li>
+                        <li class="divider"></li>
+                        <li><a class="btn-lg" ng-click="resetGame()">!! 重來一遍 !!</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="prize-container-small">
+                <div class="prize-name ng-cloak">{{getPrizeName()}}</div>
+                <div class="prize-desc ng-cloak">{{getPrizeDesc()}}</div>
+                <div class="prize-count-container">本獎項共 <a href="#" ng-click="addPrize()"><span class="prize-badge ng-cloak">{{getPrizeCount()}}</span></a> 名</div>
+                <div class="prize-status-container">已抽出 <span class="prize-badge ng-cloak">{{getWinnerCount()}}</span> 名</div>
+            </div>
+
+            <script type="text/ng-template" id="winner-board.html">
+                <div class="mg-canvas">
+                    <div class="mg-contents" ng-show="drawRange.length > 0">
+                        <div ng-repeat="idx in drawRange" ng-class="getTileClass(idx)">
+                            <div class="mg-tile-inner" data-id="{{idx}}">
+                                <span class="mg-tile-outside"></span>
+                                <span class="mg-tile-inside" ng-class="getGiveupClass(idx)">
+                                    <div class="mg-tile-emp" ng-click="giveupDraw(idx)">
+                                        <span class="mg-tile-emp-depart">{{getDraw(idx).depart}}</span>
+                                        <span class="mg-tile-emp-name">{{getDraw(idx).name}}</span>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mg-separator" ng-show="winners.length > 0">恭喜以下幸運得獎名單</div>
+
+                    <div ng-repeat="wr in winnerIndexTable" class="mg-contents-winner">
+                        <div ng-repeat="idx in wr" class="mg-tile-winner" ng-class="'mg-tile-winner-' + ((idx%5)+1).toString()">
+                            <div class="mg-tile-inner-winner">
+                                <span class="mg-tile-inside-winner">
+                                    <div class="mg-tile-emp">
+                                        <span class="mg-tile-emp-depart">{{getWinner(idx).depart}}</span>
+                                        <span class="mg-tile-emp-name">{{getWinner(idx).name}}</span>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="confirm.html">
+                <div class="modal-body confirm-text">{{msg}}</div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="ok()"> 確定 </button>
+                    <button class="btn btn-warning" ng-click="cancel()"> 取消</button>
+                </div>
+            </script>
+
+            <div class="winner-board-canvas">
+                <winner-board draw-range="drawRange" large-cell="largeCell" animate-callback="onAnimateDrawDone()" giveup-callback="giveup(draw)"></winner-board>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

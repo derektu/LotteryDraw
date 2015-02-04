@@ -1,0 +1,506 @@
+body {
+    background-color: #ffffff;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    height: auto;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.mg-canvas {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* header */
+.mg-header {
+    color: #787a80;
+    margin: 0;
+    padding: 10px 10px 10px 40px;
+    background-color: #dc3b37;
+}
+
+.mg-header-title {
+    color: #ffda9e;
+    font-size: 36pt;
+    font-weight: bold;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    text-shadow: 1px 1px 0px rgb(7, 14, 120);
+}
+
+/**
+ * Game wrapper
+ *
+ * The game wrapper is where the actual game resides. Inside here, all the
+ * memory tiles get arranged and ready for game play.
+ */
+.mg-canvas {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.mg-contents {
+    position: relative;
+    padding-bottom: 50%;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+/**
+ * Game tiles
+ *
+ * The game tiles are the tiles that are laid down on the memory game board.
+ * These tiles are the ones that the user clicks on to flip and reveal some
+ * images. The level the user selects determines the position and size of
+ * the tiles.
+ */
+.mg-tile {
+    position: absolute;
+    padding: 5px;
+    width: 20%;
+    height: 40%;
+}
+
+.mg-tile-1 {
+    top: 0%;
+    left: 0%;
+}
+.mg-tile-2 {
+    top: 0%;
+    left: 20%;
+}
+.mg-tile-3 {
+    top: 0%;
+    left: 40%;
+}
+.mg-tile-4 {
+    top: 0%;
+    left: 60%;
+}
+.mg-tile-5 {
+    top: 0%;
+    left: 80%;
+}
+.mg-tile-6 {
+    top: 50%;
+    left: 0%;
+}
+.mg-tile-7 {
+    top: 50%;
+    left: 20%;
+}
+.mg-tile-8 {
+    top: 50%;
+    left: 40%;
+}
+.mg-tile-9 {
+    top: 50%;
+    left: 60%;
+}
+.mg-tile-10 {
+    top: 50%;
+    left: 80%;
+}
+
+.mg-tile-sm {
+    position: absolute;
+    padding: 5px;
+    width: 20%;
+    height: 24%;
+}
+
+.mg-tile-sm-1 {
+    top: 0%;
+    left: 0%;
+}
+.mg-tile-sm-2 {
+    top: 0%;
+    left: 20%;
+}
+.mg-tile-sm-3 {
+    top: 0%;
+    left: 40%;
+}
+.mg-tile-sm-4 {
+    top: 0%;
+    left: 60%;
+}
+.mg-tile-sm-5 {
+    top: 0%;
+    left: 80%;
+}
+.mg-tile-sm-6 {
+    top: 25%;
+    left: 0%;
+}
+.mg-tile-sm-7 {
+    top: 25%;
+    left: 20%;
+}
+.mg-tile-sm-8 {
+    top: 25%;
+    left: 40%;
+}
+.mg-tile-sm-9 {
+    top: 25%;
+    left: 60%;
+}
+.mg-tile-sm-10 {
+    top: 25%;
+    left: 80%;
+}
+.mg-tile-sm-11 {
+    top: 50%;
+    left: 0%;
+}
+.mg-tile-sm-12 {
+    top: 50%;
+    left: 20%;
+}
+.mg-tile-sm-13 {
+    top: 50%;
+    left: 40%;
+}
+.mg-tile-sm-14 {
+    top: 50%;
+    left: 60%;
+}
+.mg-tile-sm-15 {
+    top: 50%;
+    left: 80%;
+}
+.mg-tile-sm-16 {
+    top: 75%;
+    left: 0%;
+}
+.mg-tile-sm-17 {
+    top: 75%;
+    left: 20%;
+}
+.mg-tile-sm-18 {
+    top: 75%;
+    left: 40%;
+}
+.mg-tile-sm-19 {
+    top: 75%;
+    left: 60%;
+}
+.mg-tile-sm-20 {
+    top: 75%;
+    left: 80%;
+}
+
+/**
+ * The tile inside
+ *
+ * The "tile inner" is the part of the tile that serves as the card. Inside
+ * this part, there's an outside and inside part. The outside of the card
+ * is the part that has the logo or the pattern or whatever...basically the
+ * part that doesn't show the content to be matched. The inside part has the
+ * actual images / info to be matched.
+ */
+.mg-tile-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.mg-tile-outside,
+.mg-tile-inside {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+    -webkit-transition: -webkit-transform 0.5s, background 0.5s;
+          transition: transform 0.5s, background 0.5s;
+}
+
+.mg-tile-outside {
+    background: url("../img/avatar.png") 50% 50% no-repeat;
+    background-color: #dcdee1;
+    box-shadow: 0 0 0 1px #787a80;
+}
+
+.mg-tile-inside {
+    background-color: rgba(255, 47, 235, 0.1);
+    box-shadow: 0 0 0 1px #787a80;
+    -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+/* some transforms for flipped cards */
+.mg-tile-inner.flipped .mg-tile-outside {
+    -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.mg-tile-inner.flipped .mg-tile-inside {
+    -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+}
+
+.mg-tile-emp {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.mg-tile-emp-giveup {
+    opacity: 0.5;
+    background-color: #5e5e5e;
+}
+
+.mg-tile-emp-depart {
+    text-align: center;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+    display: block;
+}
+.mg-tile-emp-name {
+    text-align: center;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+    display: block;
+}
+
+/*
+    '-winner'的是用來display已經得獎的名單. Layout的方式是一行5個cell, 一行一行layout, 所以給固定的高度
+*/
+.mg-separator {
+    width: 100%;
+    text-align: center;
+    padding: 10px 10px;
+    margin: 10px 0px;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    /*border-bottom: double 2px #ffd6ab;*/
+    font-size: 18pt;
+    color: chocolate;
+}
+
+.mg-contents-winner {
+    position: relative;
+    height: 120px;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.mg-tile-inner-winner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.mg-tile-winner {
+    position: absolute;
+    padding: 5px;
+    width: 20%;
+    height: 100%;
+}
+.mg-tile-winner-1 {
+    top: 0%;
+    left: 0%;
+}
+.mg-tile-winner-2 {
+    top: 0%;
+    left: 20%;
+}
+.mg-tile-winner-3 {
+    top: 0%;
+    left: 40%;
+}
+.mg-tile-winner-4 {
+    top: 0%;
+    left: 60%;
+}
+.mg-tile-winner-5 {
+    top: 0%;
+    left: 80%;
+}
+
+.mg-tile-inside-winner {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(245, 255, 225, 0.3);
+    box-shadow: 0 0 0 1px #787a80;
+}
+
+
+
+.prize-container {
+    position: relative;
+    margin: 20px 10% 20px 10%;
+    padding: 20px 40px;
+    background-color: rgba(192, 201, 255, 0.50);
+    height: 180px;
+    border: 2px solid #bfddff;
+    box-shadow: 0px 0px 6px rgba(140, 147, 151, 0.50);
+}
+
+.prize-container-small {
+    position: relative;
+    margin: 20px 10% 20px 10%;
+    padding: 20px 40px;
+    background-color: rgba(192, 201, 255, 0.50);
+    height: 150px;
+    border: 2px solid #bfddff;
+    box-shadow: 0px 0px 6px rgba(140, 147, 151, 0.50);
+}
+
+.prize-name {
+    display: inline-block;
+    position: absolute;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 32pt;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #ff1d63;
+    background-color: rgb(238, 234, 144);
+    /*text-shadow: 0px 0px 2px rgba(122, 47, 255, 0.80);*/
+    border: 2px solid #ffb3c4;
+    padding: 4px 10px;
+    border-radius: 10px;
+    /*transform: rotateZ(-10deg) translateY(-40%);*/
+    max-width: 60%;
+    left: 50%;
+    top: 10%;
+    text-align: center;
+    transform: translate(-50%, -10%);
+}
+
+.prize-desc {
+    position: absolute;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 28pt;
+    font-weight: bold;
+    color: #4e4fff;
+    left: 50%;
+    top: 60%;
+    max-width: 60%;
+    text-align: center;
+    transform: translate(-50%, 0%);
+    text-shadow: 0px 0px 4px rgba(255, 250, 99, 0.50);
+    letter-spacing: 4px;
+}
+
+.prize-count-container {
+    position: absolute;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+    top: 10px;
+    right:10px;
+    width: 200px;
+    text-align: right;
+}
+
+.prize-status-container {
+    position: absolute;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+    top: 60px;
+    right:10px;
+    width: 200px;
+    text-align: right;
+}
+
+.prize-badge {
+    display: inline-block;
+    min-width: 20px;
+    padding: 0px 10px;
+    font-size: 20pt;
+    font-weight: bold;
+    color: #ff0712;
+    text-align: center;
+    white-space: nowrap;
+    /*vertical-align: top;*/
+    background-color: white;
+    border-radius: 10px;
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+}
+
+/*
+    Wheel spinning 相關的設定
+*/
+.wheel-container {
+    position: fixed;
+    width : 100%;
+    height : 100%;
+    margin : 0 auto;
+    left: 50%;
+    top : 50%;
+    z-index: 101;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.80);
+    opacity: 0;
+}
+
+.wheel-image {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.wheel-image-spin {
+    -webkit-animation: spin 1s linear infinite;
+    animation:spin 1s linear infinite;
+}
+
+.winner-board-canvas {
+    margin:0 auto;
+    width:100%;
+    max-width:800px;
+}
+
+.result-canvas {
+    margin: 20px 10% 20px 10%;
+}
+
+.result-row-title {
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 30pt;
+    font-weight: bold;
+    color: #ff1d63;
+}
+
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.confirm-text {
+    font-family: Helvetica Neue, Helvetica, Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+    font-size: 18pt;
+    color: #780845;
+}

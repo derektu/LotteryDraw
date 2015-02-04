@@ -1,0 +1,46 @@
+{
+  "name": "LotteryDraw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nw.html",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "forever -f -w --watchDirectory lib lib/app.js"
+  },
+  "author": "derektu123@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^0.9.0",
+    "bluebird": "^2.6.0",
+    "body-parser": "^1.10.1",
+    "express": "^4.10.7",
+    "lodash": "^2.4.1",
+    "log4js": "^0.6.21",
+    "minimist": "^1.1.0",
+    "request": "^2.51.0",
+    "soap": "^0.6.1",
+    "underscore.string": "^3.0.0",
+    "xlsjs": "^0.7.2",
+    "xlsx": "^0.7.12"
+  },
+  "devDependencies": {
+    "forever": "latest",
+    "mocha": "latest"
+  },
+  "window": {
+    "title": "抽獎程式",
+    "toolbar": false,
+    "frame": true,
+    "position": "center",
+    "fullscreen": false,
+    "resizable": true,
+    "width": 1280,
+    "height": 860,
+    "min_width": 600,
+    "min_height": 400
+  }
+}
